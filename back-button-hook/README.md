@@ -1,27 +1,88 @@
-# BackButtonHook
+<h1 align="center">Back Button Hook</h1>
+<p align="center">This library was designed to call registered hook functions when the back button was pressed by user..</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+<p align="center">
+  <img src="https://badgen.net/npm/v/@rebase-team/back-button-hook"/> 
+  <img src="https://badgen.net/npm/dt/@rebase-team/back-button-hook"/>
+  <img src="https://badgen.net/npm/license/@rebase-team/back-button-hook"/>
+  <img src="https://badgen.net/npm/types/@rebase-team/back-button-hook"/>
+  <img src="https://badgen.net/badge/author/MurylloEx/red?icon=label"/>
+</p>
 
-## Development server
+You will need (>= Angular 9) to use this library and an Ionic project (>= v3).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
+```sh
+npm install @rebase-team/back-button-hook
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage examples
 
-## Build
+``> APP.MODULE.TS``
+```typescript
+import { AppComponent } from "./app.component";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { BackButtonHookService } from "@rebase-team/back-button-hook";
+import { IonicModule } from "@ionic/angular";
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+@NgModule({
+  declarations: [],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot()
+  ],
+  providers: [
+    BackButtonHookService
+  ],
+  bootstrap: [AppComponent],
+  exports: []
+})
+export class AppModule { }
+```
 
-## Running unit tests
+``> APP.COMPONENT.TS``
+```typescript
+import { Platform } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { BackButtonHookService } from "@rebase-team/back-button-hook";
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@Component({
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
+})
+export class AppComponent {
 
-## Running end-to-end tests
+  constructor(
+    private platform: Platform,
+    private backButton: BackButtonHookService
+  ) {
+    this.backButtonRegister();
+  }
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  private backButtonRegister(): void {
+    this.backButton.Hook.CreateCallback(async () => {
+      let url = this.platform.url().toUpperCase();
+      console.log('Back Button triggered on route: ' + url);
+    });
+    this.backButton.Hook.Hook();
+  }
+}
+```
 
-## Further help
+## Metadata
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Muryllo Pimenta de Oliveira – muryllo.pimenta@upe.br
+
+Distribuído sobre a licença MIT. Veja ``LICENSE`` para mais informações.
+
+## Contributing
+
+1. Fork it (<https://github.com/MurylloEx/Back-Button-Hook/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
+
